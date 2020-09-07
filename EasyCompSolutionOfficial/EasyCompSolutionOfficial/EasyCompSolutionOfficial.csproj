@@ -109,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -707,6 +708,9 @@
     <Content Include="node_modules\angular\LICENSE.md" />
     <Content Include="node_modules\angular\package.json" />
     <Content Include="node_modules\angular\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Projects\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

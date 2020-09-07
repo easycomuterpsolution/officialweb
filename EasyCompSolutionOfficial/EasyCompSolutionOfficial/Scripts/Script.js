@@ -8,6 +8,4 @@ angular.module('buttonsDemoBasic', ['ngMaterial'])
     $scope.title4 = 'Warn';
     $scope.isDisabled = true;
     $scope.googleUrl = 'http://google.com';
-    
-   
 });
