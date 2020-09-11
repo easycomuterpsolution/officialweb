@@ -3,7 +3,7 @@
 }
 
 
-<html ng-app="buttonsDemoBasic">
+<html ng-app="basicUsageSidenavDemo">
 
 <head>
     <title>Projects</title>
@@ -16,51 +16,253 @@
     @*<script src="~/Scripts/angular.min.js"></script>*@
     <script src="~/Scripts/Script.js"></script>
     <style>
-       .carddemoBasicUsage .card-media {
+        .carddemoBasicUsage .card-media {
             background-color: #999999;
         }
     </style>
 
-</head>
-<body>
-    <div ng-controller="AppCtrl" ng-cloak>
-        <md-toolbar>Projects</md-toolbar>
-        <md-content class="md-padding" layout-xs="column" layout="row">
-            <div flex-xs flex-gt-xs="50" layout="column">
-                <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-                    <md-card-title>
-                        <md-card-title-text>
-                            <span class="md-headline">Card with image</span>
-                            <span class="md-subhead">Large</span>
-                        </md-card-title-text>
-                        <md-card-title-media>
-                            <div class="md-media-lg card-media"></div>
-                        </md-card-title-media>
-                    </md-card-title>
-                    <md-card-actions layout="row" layout-align="end center">
-                        <md-button>Action 1</md-button>
-                        <md-button>Action 2</md-button>
-                    </md-card-actions>
-                </md-card>
-                
-            </div>
-             
-        </md-content>
-    </div>
+
+
     <script>
 
-        angular.module('cardDemo1', ['ngMaterial'])
+        //var cardDemo1 = angular.module('cardDemo1', ['ngMaterial'])
+        //    .controller('AppCtrl', function ($scope) {
+        //        $scope.imagePath = 'img/washedout.png';
+        //    })
+        //    .config(function ($mdThemingProvider) {
+        //        $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();
+        //        $mdThemingProvider.theme('dark-orange').backgroundPalette('orange').dark();
+        //        $mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
+        //        $mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
+        //    });
+        var cardDemo3 = angular.module('cardDemo3', ['ngMaterial'])
+        .config(['$mdIconProvider', function ($mdIconProvider) {
+            $mdIconProvider.icon('md-toggle-arrow', 'img/icons/toggle-arrow.svg', 48);
+        }])
+        .controller('AppCtrl', function ($scope) {
+            //$scope.imagePath = 'images/Project01.jpg';
+            $scope.imagePath = '~/Images/Project01.jpg';
+        });
+        var basicUsageSidenavDemo = angular
+        .module('basicUsageSidenavDemo', ['ngMaterial'])
+        .controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+            $scope.toggleLeft = buildDelayedToggler('left');
+            $scope.toggleRight = buildToggler('right');
+            $scope.isOpenRight = function () {
+                return $mdSidenav('right').isOpen();
+            };
 
-.controller('AppCtrl', function ($scope) {
-    $scope.imagePath = 'img/washedout.png';
-})
-.config(function ($mdThemingProvider) {
-    $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();
-    $mdThemingProvider.theme('dark-orange').backgroundPalette('orange').dark();
-    $mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
-    $mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
-});
+            /**
+            * Supplies a function that will continue to operate until the
+            * time is up.
+            */
+            function debounce(func, wait, context) {
+                var timer;
+
+                return function debounced() {
+                    var context = $scope,
+                        args = Array.prototype.slice.call(arguments);
+                    $timeout.cancel(timer);
+                    timer = $timeout(function () {
+                        timer = undefined;
+                        func.apply(context, args);
+                    }, wait || 10);
+                };
+            }
+
+            /**
+            * Build handler to open/close a SideNav; when animation finishes
+            * report completion in console
+            */
+            function buildDelayedToggler(navID) {
+                return debounce(function () {
+                    // Component lookup should always be available since we are not using `ng-if`
+                    $mdSidenav(navID)
+                    .toggle()
+                    .then(function () {
+                        $log.debug("toggle " + navID + " is done");
+                    });
+                }, 200);
+            }
+
+            function buildToggler(navID) {
+                return function () {
+                    // Component lookup should always be available since we are not using `ng-if`
+                    $mdSidenav(navID)
+                    .toggle()
+                    .then(function () {
+                        $log.debug("toggle " + navID + " is done");
+                    });
+                };
+            }
+        })
+        .controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+            $scope.close = function () {
+                // Component lookup should always be available since we are not using `ng-if`
+                $mdSidenav('left').close()
+                .then(function () {
+                    $log.debug("close LEFT is done");
+                });
+
+            };
+        })
+        .controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+            $scope.close = function () {
+                // Component lookup should always be available since we are not using `ng-if`
+                $mdSidenav('right').close()
+                .then(function () {
+                    $log.debug("close RIGHT is done");
+                });
+            };
+        });
     </script>
+
+</head>
+<body>
+
+
+    <div ng-controller="AppCtrl" layout="column" style="height:500px;" ng-cloak>
+
+        <section layout="row" flex>
+
+            <md-sidenav class="md-sidenav-left"
+                        md-component-id="left"
+                        md-is-locked-open="$mdMedia('gt-md')"
+                        md-whiteframe="4">
+
+                <md-toolbar class="md-theme-indigo">
+                    <h1 class="md-toolbar-tools">Sidenav Left</h1>
+                </md-toolbar>
+                <md-content layout-padding ng-controller="LeftCtrl">
+                    <md-button ng-click="close()" class="md-primary" hide-gt-md>
+                        Close Sidenav Left
+                    </md-button>
+                    <p hide show-gt-md>
+                        This sidenav is locked open on your device. To go back to the default behavior,
+                        narrow your display.
+                    </p>
+                </md-content>
+
+            </md-sidenav>
+
+            <md-content flex layout-padding>
+
+                <div layout="column" layout-align="top center">
+                    <p>
+                        The left sidenav will 'lock open' on a medium (>=960px wide) device.
+                    </p>
+                    <p>
+                        The right sidenav will focus on a specific child element.
+                    </p>
+
+
+                    <div>
+                        <md-button ng-click="toggleLeft()"
+                                   class="md-primary" hide-gt-md>
+                            Toggle left
+                        </md-button>
+                    </div>
+
+                    <div>
+                        <md-button ng-click="toggleRight()"
+                                   ng-hide="isOpenRight()"
+                                   class="md-primary">
+                            Toggle right
+                        </md-button>
+                    </div>
+
+                    <div flex-xs flex-gt-xs="50" layout="column" ng-app="cardDemo3">
+                        <md-card ng-controller="AppCtrl">
+                            <md-card-header>
+                                <md-card-avatar>
+                                    <md-icon class="md-avatar-icon" md-svg-icon="img/icons/menu.svg"></md-icon>
+                                </md-card-avatar>
+                                <md-card-header-text>
+                                    <span class="md-title">Title</span>
+                                    <span class="md-subhead">subhead</span>
+                                </md-card-header-text>
+                            </md-card-header>
+                            <img src="~/Images/Project01.jpg" class="md-card-image" alt="Washed Out">
+                             
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">In-card actions</span>
+                                    <span class="md-subhead">Description</span>
+                                </md-card-title-text>
+                            </md-card-title>
+                            <md-card-actions layout="row" layout-align="start center">
+                                <md-button>Action 1</md-button>
+                                <md-button>Action 2</md-button>
+                            </md-card-actions>
+                            <md-card-content>
+                                <p>
+                                    The titles of Washed Out's breakthrough song and the first single from Paracosm share the
+                                    two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
+                                </p>
+                            </md-card-content>
+                        </md-card>
+
+                        <md-card ng-controller="AppCtrl">
+                            <md-card-header>
+                                <md-card-avatar>
+                                    <md-icon class="md-avatar-icon" md-svg-icon="img/icons/menu.svg"></md-icon>
+                                </md-card-avatar>
+                                <md-card-header-text>
+                                    <span class="md-title">Title</span>
+                                    <span class="md-subhead">subhead</span>
+                                </md-card-header-text>
+                            </md-card-header>
+                            <img src="~/Images/Project01.jpg" class="md-card-image" alt="Washed Out">
+
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">In-card actions</span>
+                                    <span class="md-subhead">Description</span>
+                                </md-card-title-text>
+                            </md-card-title>
+                            <md-card-actions layout="row" layout-align="start center">
+                                <md-button>Action 1</md-button>
+                                <md-button>Action 2</md-button>
+                            </md-card-actions>
+                            <md-card-content>
+                                <p>
+                                    The titles of Washed Out's breakthrough song and the first single from Paracosm share the
+                                    two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
+                                </p>
+                            </md-card-content>
+                        </md-card>
+                    </div>
+                </div>
+
+                <div flex></div>
+
+            </md-content>
+
+            <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
+
+                <md-toolbar class="md-theme-light">
+                    <h1 class="md-toolbar-tools">Sidenav Right</h1>
+                </md-toolbar>
+                <md-content ng-controller="RightCtrl" layout-padding>
+                    <form>
+                        <md-input-container>
+                            <label for="testInput">Test input</label>
+                            <input type="text" id="testInput"
+                                   ng-model="data" md-autofocus>
+                        </md-input-container>
+                    </form>
+                    <md-button ng-click="close()" class="md-primary">
+                        Close Sidenav Right
+                    </md-button>
+                </md-content>
+
+            </md-sidenav>
+
+        </section>
+
+    </div>
+
+
 </body>
 </html>
 
