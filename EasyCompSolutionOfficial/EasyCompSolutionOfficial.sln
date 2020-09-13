@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyCompSolutionOfficial", "EasyCompSolutionOfficial\EasyCompSolutionOfficial.csproj", "{93F885BD-2ABF-4528-923A-E01B1FF6DA87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuisnessLayers", "BuisnessLayers\BuisnessLayers.csproj", "{89413B9D-5EDC-455D-83F9-1169663C06D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{93F885BD-2ABF-4528-923A-E01B1FF6DA87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93F885BD-2ABF-4528-923A-E01B1FF6DA87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93F885BD-2ABF-4528-923A-E01B1FF6DA87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89413B9D-5EDC-455D-83F9-1169663C06D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89413B9D-5EDC-455D-83F9-1169663C06D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89413B9D-5EDC-455D-83F9-1169663C06D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89413B9D-5EDC-455D-83F9-1169663C06D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

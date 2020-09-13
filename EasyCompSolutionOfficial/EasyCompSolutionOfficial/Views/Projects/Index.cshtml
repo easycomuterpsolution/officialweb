@@ -1,269 +1,202 @@
-﻿@{
+﻿@using EasyCompSolutionOfficial.Models;
+@model List<YoutubeLink>
+
+@{
     ViewBag.Title = "Index";
 }
 
 
-<html ng-app="basicUsageSidenavDemo">
+<html ng-app="gridListDemo1">
 
 <head>
     <title>Projects</title>
     <link href="~/node_modules/angular-material/angular-material.min.css" rel="stylesheet" />
     <link href="~/Styles/Style.css" rel="stylesheet" />
     <script src="~/node_modules/angular/angular.min.js"></script>
-    <script src="~/node_modules/angular-material/angular-material.min.js"></script>
     <script src="~/node_modules/angular-animate/angular-animate.min.js"></script>
     <script src="~/node_modules/angular-aria/angular-aria.min.js"></script>
+    <script src="~/node_modules/angular-material/angular-material.min.js"></script>
     @*<script src="~/Scripts/angular.min.js"></script>*@
     <script src="~/Scripts/Script.js"></script>
     <style>
-        .carddemoBasicUsage .card-media {
-            background-color: #999999;
+        .gridListdemoBasicUsage md-grid-list {
+            margin: 8px;
+        }
+
+        .gridListdemoBasicUsage .gray {
+            background: #f5f5f5;
+        }
+
+        .gridListdemoBasicUsage .green {
+            background: #b9f6ca;
+        }
+
+        .gridListdemoBasicUsage .yellow {
+            background: #ffff8d;
+        }
+
+        .gridListdemoBasicUsage .blue {
+            background: #84ffff;
+        }
+
+        .gridListdemoBasicUsage .purple {
+            background: #b388ff;
+        }
+
+        .gridListdemoBasicUsage .red {
+            background: #ff8a80;
         }
     </style>
 
-
-
     <script>
 
-        //var cardDemo1 = angular.module('cardDemo1', ['ngMaterial'])
-        //    .controller('AppCtrl', function ($scope) {
-        //        $scope.imagePath = 'img/washedout.png';
-        //    })
-        //    .config(function ($mdThemingProvider) {
-        //        $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();
-        //        $mdThemingProvider.theme('dark-orange').backgroundPalette('orange').dark();
-        //        $mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
-        //        $mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
-        //    });
-        var cardDemo3 = angular.module('cardDemo3', ['ngMaterial'])
-        .config(['$mdIconProvider', function ($mdIconProvider) {
-            $mdIconProvider.icon('md-toggle-arrow', 'img/icons/toggle-arrow.svg', 48);
-        }])
-        .controller('AppCtrl', function ($scope) {
-            //$scope.imagePath = 'images/Project01.jpg';
-            $scope.imagePath = '~/Images/Project01.jpg';
-        });
-        var basicUsageSidenavDemo = angular
-        .module('basicUsageSidenavDemo', ['ngMaterial'])
-        .controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $log) {
-            $scope.toggleLeft = buildDelayedToggler('left');
-            $scope.toggleRight = buildToggler('right');
-            $scope.isOpenRight = function () {
-                return $mdSidenav('right').isOpen();
-            };
-
-            /**
-            * Supplies a function that will continue to operate until the
-            * time is up.
-            */
-            function debounce(func, wait, context) {
-                var timer;
-
-                return function debounced() {
-                    var context = $scope,
-                        args = Array.prototype.slice.call(arguments);
-                    $timeout.cancel(timer);
-                    timer = $timeout(function () {
-                        timer = undefined;
-                        func.apply(context, args);
-                    }, wait || 10);
-                };
-            }
-
-            /**
-            * Build handler to open/close a SideNav; when animation finishes
-            * report completion in console
-            */
-            function buildDelayedToggler(navID) {
-                return debounce(function () {
-                    // Component lookup should always be available since we are not using `ng-if`
-                    $mdSidenav(navID)
-                    .toggle()
-                    .then(function () {
-                        $log.debug("toggle " + navID + " is done");
-                    });
-                }, 200);
-            }
-
-            function buildToggler(navID) {
-                return function () {
-                    // Component lookup should always be available since we are not using `ng-if`
-                    $mdSidenav(navID)
-                    .toggle()
-                    .then(function () {
-                        $log.debug("toggle " + navID + " is done");
-                    });
-                };
-            }
-        })
-        .controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
-            $scope.close = function () {
-                // Component lookup should always be available since we are not using `ng-if`
-                $mdSidenav('left').close()
-                .then(function () {
-                    $log.debug("close LEFT is done");
-                });
-
-            };
-        })
-        .controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
-            $scope.close = function () {
-                // Component lookup should always be available since we are not using `ng-if`
-                $mdSidenav('right').close()
-                .then(function () {
-                    $log.debug("close RIGHT is done");
-                });
-            };
-        });
+        angular.module('gridListDemo1', ['ngMaterial'])
+        .controller('AppCtrl', function ($scope) { });
     </script>
 
 </head>
 <body>
 
+    <div ng-controller="AppCtrl as appCtrl" ng-cloak class="gridListdemoBasicUsage">
 
-    <div ng-controller="AppCtrl" layout="column" style="height:500px;" ng-cloak>
+        <md-toolbar md-scroll-shrink ng-if="true">Easy Comp Solution Projects</md-toolbar>
 
-        <section layout="row" flex>
+        @*@for (int i = 0; i < @Model.Count; i++)
+            {
+                <md-toolbar md-scroll-shrink ng-if="true">@Model[i].Link</md-toolbar>
+            }*@
 
-            <md-sidenav class="md-sidenav-left"
-                        md-component-id="left"
-                        md-is-locked-open="$mdMedia('gt-md')"
-                        md-whiteframe="4">
+        <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
+                      md-row-height-gt-md="1:1" md-row-height="2:2"
+                      md-gutter="12px" md-gutter-gt-sm="8px">
 
-                <md-toolbar class="md-theme-indigo">
-                    <h1 class="md-toolbar-tools">Sidenav Left</h1>
-                </md-toolbar>
-                <md-content layout-padding ng-controller="LeftCtrl">
-                    <md-button ng-click="close()" class="md-primary" hide-gt-md>
-                        Close Sidenav Left
-                    </md-button>
-                    <p hide show-gt-md>
-                        This sidenav is locked open on your device. To go back to the default behavior,
-                        narrow your display.
-                    </p>
-                </md-content>
-
-            </md-sidenav>
-
-            <md-content flex layout-padding>
-
-                <div layout="column" layout-align="top center">
-                    <p>
-                        The left sidenav will 'lock open' on a medium (>=960px wide) device.
-                    </p>
-                    <p>
-                        The right sidenav will focus on a specific child element.
-                    </p>
-
-
-                    <div>
-                        <md-button ng-click="toggleLeft()"
-                                   class="md-primary" hide-gt-md>
-                            Toggle left
-                        </md-button>
+            <md-grid-tile class="gray"
+                          md-rowspan="3" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
+                @*<img src="~/Images/Project01.jpg" />*@
+                @*<div layout="row">
+                        <div flex="100"><iframe width="100%" src="https://www.youtube.com/embed/zKkUN-mJtPQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    </div>
                     </div>
+                    <div layout="column">
+                        <div flex="100">
+                            <iframe width="100%" src="https://www.youtube.com/embed/zKkUN-mJtPQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>*@
 
-                    <div>
-                        <md-button ng-click="toggleRight()"
-                                   ng-hide="isOpenRight()"
-                                   class="md-primary">
-                            Toggle right
-                        </md-button>
-                    </div>
 
-                    <div flex-xs flex-gt-xs="50" layout="column" ng-app="cardDemo3">
-                        <md-card ng-controller="AppCtrl">
-                            <md-card-header>
-                                <md-card-avatar>
-                                    <md-icon class="md-avatar-icon" md-svg-icon="img/icons/menu.svg"></md-icon>
-                                </md-card-avatar>
-                                <md-card-header-text>
-                                    <span class="md-title">Title</span>
-                                    <span class="md-subhead">subhead</span>
-                                </md-card-header-text>
-                            </md-card-header>
-                            <img src="~/Images/Project01.jpg" class="md-card-image" alt="Washed Out">
-                             
-                            <md-card-title>
-                                <md-card-title-text>
-                                    <span class="md-headline">In-card actions</span>
-                                    <span class="md-subhead">Description</span>
-                                </md-card-title-text>
-                            </md-card-title>
-                            <md-card-actions layout="row" layout-align="start center">
-                                <md-button>Action 1</md-button>
-                                <md-button>Action 2</md-button>
-                            </md-card-actions>
-                            <md-card-content>
-                                <p>
-                                    The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                                    two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                                </p>
-                            </md-card-content>
-                        </md-card>
 
-                        <md-card ng-controller="AppCtrl">
-                            <md-card-header>
-                                <md-card-avatar>
-                                    <md-icon class="md-avatar-icon" md-svg-icon="img/icons/menu.svg"></md-icon>
-                                </md-card-avatar>
-                                <md-card-header-text>
-                                    <span class="md-title">Title</span>
-                                    <span class="md-subhead">subhead</span>
-                                </md-card-header-text>
-                            </md-card-header>
-                            <img src="~/Images/Project01.jpg" class="md-card-image" alt="Washed Out">
+                <div layout="row" flex-gt-sm="100" flex>
+                    <md-content>
 
-                            <md-card-title>
-                                <md-card-title-text>
-                                    <span class="md-headline">In-card actions</span>
-                                    <span class="md-subhead">Description</span>
-                                </md-card-title-text>
-                            </md-card-title>
-                            <md-card-actions layout="row" layout-align="start center">
-                                <md-button>Action 1</md-button>
-                                <md-button>Action 2</md-button>
-                            </md-card-actions>
-                            <md-card-content>
-                                <p>
-                                    The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                                    two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                                </p>
-                            </md-card-content>
-                        </md-card>
-                    </div>
+                        <md-list flex>
+                            <md-subheader class="md-no-sticky">3 line item (dense)</md-subheader>
+
+                            <md-list-item class="md-2-line">
+                                @*<img ng-src="{{item.face}}?{{$index}}" alt="{{item.who}}" />*@
+                                <img src="~/Images/Project05.jpg" class="md-avatar" />
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>@Html.ActionLink("Create New Link", "Create")</h3>
+                                </div>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                            <md-list-item class="md-3-line">
+                                <img src="~/Images/Project05.jpg" class="md-avatar" />
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>@Html.ActionLink("Edit Link", "Edit")</h3>
+                                </div>
+                            </md-list-item>
+
+                            @for (int i = 0; i < @Model.Count; i++)
+                            {
+                                <md-divider></md-divider>
+                                <md-list-item class="md-3-line">
+                                    <img src="~/Images/Project05.jpg" class="md-avatar" />
+                                    <div class="md-list-item-text" layout="column">
+                                        <h3>@Model[i].Title</h3>
+                                        <a href="@Model[i].Link.Replace("https://www.youtube.com/embed/", "https://www.youtube.com/watch?v=")" target="_blank">Watch Video</a>
+                                    </div>
+                                </md-list-item>
+                            }
+
+                        </md-list>
+                    </md-content>
                 </div>
+                <md-grid-tile-footer>
+                    <h3>#1: (3r x 2c)</h3>
+                </md-grid-tile-footer>
+                <md-grid-tile-header>
+                    <h3>This is a header</h3>
+                </md-grid-tile-header>
+            </md-grid-tile>
 
-                <div flex></div>
+            @for (int i = 0; i < @Model.Count; i++)
+            {
 
-            </md-content>
+                <md-grid-tile class="green">
+                    <md-grid-tile-header>
+                        <h3>@Model[i].Title</h3>
+                    </md-grid-tile-header>
+                    <div layout="row">
+                        <div flex="">
+                            <iframe width="100%" src="@Model[i].Link" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
 
-            <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
+                    <md-grid-tile-footer>
+                        <a href="@Model[i].Link.Replace("https://www.youtube.com/embed/", "https://www.youtube.com/watch?v=")" target="_blank">Watch Video</a>
+                         @Html.ActionLink("Edit", "Edit", new { @id = @Model[i].Id }) 
+                        @*<h3> @Model[i].Link.Replace("https://www.youtube.com/embed/", "https://www.youtube.com/watch?v=")</h3>*@
+                    </md-grid-tile-footer>
+                </md-grid-tile>
 
-                <md-toolbar class="md-theme-light">
-                    <h1 class="md-toolbar-tools">Sidenav Right</h1>
-                </md-toolbar>
-                <md-content ng-controller="RightCtrl" layout-padding>
-                    <form>
-                        <md-input-container>
-                            <label for="testInput">Test input</label>
-                            <input type="text" id="testInput"
-                                   ng-model="data" md-autofocus>
-                        </md-input-container>
-                    </form>
-                    <md-button ng-click="close()" class="md-primary">
-                        Close Sidenav Right
-                    </md-button>
-                </md-content>
 
-            </md-sidenav>
+            }
 
-        </section>
 
+            <md-grid-tile class="green">
+                <img src="~/Images/Project02.png" />
+                <md-grid-tile-footer>
+                    <h3>#2: (1r x 1c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+
+            <md-grid-tile class="yellow">
+
+                <img src="~/Images/Project03.jpg" />
+                <md-grid-tile-footer>
+                    <h3>#3: (1r x 1c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+
+            <md-grid-tile class="blue">
+                <img src="~/Images/project04.jpg" />
+                <md-grid-tile-footer>
+                    <h3>#4: (1r x 1c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+
+            <md-grid-tile class="blue">
+                <img src="~/Images/project05.jpg" />
+                <md-grid-tile-footer>
+                    <h3>#5: (1r x 1c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+
+            @*<md-grid-tile class="red"
+                              md-rowspan="2" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
+                    <md-grid-tile-footer>
+                        <h3>#5: (2r x 2c)</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+
+                <md-grid-tile class="green"
+                              md-rowspan="2">
+                    <md-grid-tile-footer>
+                        <h3>#6: (2r x 1c)</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>*@
+
+        </md-grid-list>
     </div>
-
-
 </body>
 </html>
-
-
