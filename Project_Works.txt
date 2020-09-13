@@ -1,0 +1,49 @@
+1. First we have to create a attractive page, which looks good
+2. How to create an attractive page, help from 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zKkUN-mJtPQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/gWmOKmgnQkU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/II11QjvAv2c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FTiKWY2AbEw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IAQ4u_JRk0E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Y02gajGW3kY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+
+
+
+
+
+
+select * from YoutubeLinks
+
+Create procedure spGetAllYoutubeLinks
+as
+Begin
+ select * from YoutubeLinks;
+End
+
+
+alter procedure spInsertYoutubeLinks 
+@Link nvarchar(500),
+@Title nvarchar(500)
+as
+Begin
+ --select * from YoutubeLinks;
+
+ insert into YoutubeLinks(YoutubeLink, Title)
+ values(@Link, @Title)
+End
+
+
+
+https://www.youtube.com/embed/FTiKWY2AbEw
+https://www.youtube.com/watch?v=
